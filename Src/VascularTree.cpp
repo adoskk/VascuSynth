@@ -45,6 +45,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+minDistance: minimal distance between two nodes
 =========================================================================*/
 
 #include <cmath>
@@ -187,8 +188,8 @@ double VascularTree::calculateFitness(){
 }
 
 /**
- * When used by local optimization, ignored is the segment to connect to
- * otherwise it should be -1;
+ * Check the distance between candidate point and bifurcation point;
+	Refuse the candidate point if it's too close;
  */
 bool VascularTree::validateCandidate(double* x0, int ignored){
 	
@@ -230,7 +231,7 @@ void VascularTree::connectPoint(double* point, int segment, double* bifPoint){
 		//						  * point[]
 		//
 		//
-		//  where I_sec is replaced with I_con
+		//  where I_seg is replaced with I_con
 		//
 		//
 		// 	I_con = I_seg with the exception of parent (which is set to I_biff
@@ -307,15 +308,20 @@ double* VascularTree::localOptimization(double * point, int segment, int steps){
 	double bestFitness = 1e200;
 
 	double bif[3];
+
+	// starting/parent point of the segment
 	double perf[3];
 	perf[0] = nt.getPos(nt.getParent(segment))[0];
 	perf[1] = nt.getPos(nt.getParent(segment))[1];
 	perf[2] = nt.getPos(nt.getParent(segment))[2];
+
+	// terminal point of the segment
 	double con[3];
 	con[0] = nt.getPos(segment)[0];
 	con[1] = nt.getPos(segment)[1];
 	con[2] = nt.getPos(segment)[2];
 	
+	// bifurcation is in the middle of the branch
 	bif[0] = ((con[0] - perf[0])/2.0 + perf[0]);
 	bif[1] = ((con[1] - perf[1])/2.0 + perf[1]);
 	bif[2] = ((con[2] - perf[2])/2.0 + perf[2]);
@@ -332,8 +338,11 @@ double* VascularTree::localOptimization(double * point, int segment, int steps){
 	nt.startUndo();
 
 	connectPoint(point, segment, bif);
+	calculateRadius();
+	bestFitness = calculateFitness();
+
 	nt.applyUndo();
-		
+
 	double localBest[3];
 	double test[3];
 
@@ -436,10 +445,10 @@ double* VascularTree::localOptimization(double * point, int segment, int steps){
 			bif[0] = localBest[0]; bif[1] = localBest[1]; bif[2] = localBest[2];
 		} else {
 			break;
-		}
+		}	
 	}
 	nt.clearUndo();
-	nt.stopUndo();
+	nt.stopUndo();	
 	
 	double *ret = new double[4];
 	ret[0] = bif[0]; ret[1] = bif[1]; ret[2] = bif[2];
@@ -569,9 +578,11 @@ void VascularTree::buildTree(){
 	while(count < numNodes){
 		
 		double sum = oxMap->sum();
+		int local_optimization_candidate_num = 0; // number of searching points in local optimization; set num = 0 to ensure the branches are on the same plane
 		oxMap->candidate(sum, term);
 		cand[0] = term[0]; cand[1] = term[1]; cand[2] = term[2];
-		if(connectCandidate(cand, 20)){
+
+		if(connectCandidate(cand, local_optimization_candidate_num)){
 			count++;
 			oxMap->applyCandidate(term);
 		}
