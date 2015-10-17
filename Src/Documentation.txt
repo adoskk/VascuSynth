@@ -1,5 +1,6 @@
 # project website: vascusynth.cs.sfu.ca
 # documentation/src updated: Oct/16/2015
+# parameter files download: http://www.insight-journal.org/browse/publication/794
 
 Tested VTK version: 6.3.0
 Tested ITK version: 4.8.1
