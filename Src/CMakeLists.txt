@@ -1,1 +1,8 @@
-#cmake_minimum_required(VERSION 2.7.1)PROJECT( VascuSynth )FIND_PACKAGE( ITK )IF( ITK_FOUND )	INCLUDE( ${ITK_USE_FILE} )ENDIF (ITK_FOUND )ADD_EXECUTABLE(VascuSynth VascuSynth.cpp SupplyMap.cpp OxygenationMap.cpp NodeTable.cpp VascularTree.cpp TreeDrawer.cpp)TARGET_LINK_LIBRARIES(VascuSynth ITKLIBRARIES)
+cmake_minimum_required (VERSION 2.8)
+project (VascuSynth)
+find_package (ITK)
+IF(ITK_FOUND)
+	INCLUDE(${ITK_USE_FILE})
+ENDIF(ITK_FOUND)
+add_executable (VascuSynth VascuSynth.cpp SupplyMap.cpp OxygenationMap.cpp NodeTable.cpp VascularTree.cpp TreeDrawer.cpp)
+target_link_libraries (VascuSynth ${ITK_LIBRARIES})
