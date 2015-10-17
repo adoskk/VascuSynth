@@ -1,7 +1,38 @@
-# project website: vascusynth.cs.sfu.ca
-# documentation/src updated: Oct/16/2015
-# parameter files download: http://www.insight-journal.org/browse/publication/794
-
+# project website: 
+# http://vascusynth.cs.sfu.ca
+# http://www.insight-journal.org/browse/publication/794
+# updated: Oct/16/2015
+# document written by: Mengliu Zhao, mengliuz@sfu.ca
+# ---------------------------------------------------------
+# Please cite the following two papers if you're using this software for your research. Thanks:)
+# @ARTICLE{cmig2010,
+#   AUTHOR       = {Ghassan Hamarneh and Preet Jassi},
+#   JOURNAL      = {Computerized Medical Imaging and Graphics},
+#   TITLE        = {VascuSynth: Simulating Vascular Trees for Generating
+#                   Volumetric Image data with Ground Truth Segmentation and 
+#                   Tree Analysis},
+#   YEAR         = {2010},
+#   NUMBER       = {8},
+#   PAGES        = {605-616},
+#   VOLUME       = {34},
+#   PDF          = {http://www.cs.sfu.ca/~hamarneh/ecopy/cmig2010.pdf},
+#   DOI          = {10.1016/j.compmedimag.2010.06.002}
+# }
+# 
+# 
+# @ARTICLE{ij2011,
+#   AUTHOR       = {Preet Jassi and Ghassan Hamarneh},
+#   JOURNAL      = {Insight Journal},
+#   TITLE        = {VascuSynth: Vascular Tree Synthesis Software},
+#   YEAR         = {2011},
+#   PAGES        = {1-12},
+#   VOLUME       = {January-June},
+#   PDF          = {http://www.cs.sfu.ca/~hamarneh/ecopy/ij2011.pdf},
+#   DOI          = {10380/3260}
+# }
+# -----------------------------------------------------------
+#
+# ------------------- Instructions on Building VTK/ITK ----------------
 Tested VTK version: 6.3.0
 Tested ITK version: 4.8.1
 CMake ITK building setting: BUILD/BUILD_SHARED_LIBS -> on
